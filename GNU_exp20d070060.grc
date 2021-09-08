@@ -73,7 +73,7 @@ blocks:
     alias: ''
     amp: '1'
     comment: ''
-    freq: '650'
+    freq: '640'
     maxoutbuf: '0'
     minoutbuf: '0'
     offset: '0'
@@ -117,7 +117,7 @@ blocks:
     alias: ''
     amp: '1'
     comment: ''
-    freq: '300'
+    freq: '320'
     maxoutbuf: '0'
     minoutbuf: '0'
     offset: '0'
@@ -169,7 +169,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [759, 167]
+    coordinate: [762, 145]
     rotation: 0
     state: true
 - name: blocks_sub_xx_0_0
@@ -436,7 +436,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1137, 138]
+    coordinate: [1160, 153]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0_0
@@ -454,7 +454,7 @@ blocks:
     alpha7: '1.0'
     alpha8: '1.0'
     alpha9: '1.0'
-    autoscale: 'False'
+    autoscale: 'True'
     axislabels: 'True'
     color1: blue
     color10: dark blue
@@ -525,7 +525,7 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    ylabel: 300hz
+    ylabel: 800Hz
     ymax: '4'
     ymin: '-4'
     yunit: '""'
@@ -533,7 +533,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1148, 248]
+    coordinate: [1167, 652]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0_0_0
@@ -551,7 +551,7 @@ blocks:
     alpha7: '1.0'
     alpha8: '1.0'
     alpha9: '1.0'
-    autoscale: 'False'
+    autoscale: 'True'
     axislabels: 'True'
     color1: blue
     color10: dark blue
@@ -622,7 +622,7 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    ylabel: 650HZ
+    ylabel: 640Hz
     ymax: '4'
     ymin: '-4'
     yunit: '""'
@@ -630,7 +630,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1156, 531]
+    coordinate: [1168, 536]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0_0_0_0
@@ -648,7 +648,7 @@ blocks:
     alpha7: '1.0'
     alpha8: '1.0'
     alpha9: '1.0'
-    autoscale: 'False'
+    autoscale: 'True'
     axislabels: 'True'
     color1: blue
     color10: dark blue
@@ -719,7 +719,7 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    ylabel: 400HZ
+    ylabel: 320Hz
     ymax: '4'
     ymin: '-4'
     yunit: '""'
@@ -727,7 +727,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1156, 381]
+    coordinate: [1168, 288]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0_0_0_0_0
@@ -745,7 +745,7 @@ blocks:
     alpha7: '1.0'
     alpha8: '1.0'
     alpha9: '1.0'
-    autoscale: 'False'
+    autoscale: 'True'
     axislabels: 'True'
     color1: blue
     color10: dark blue
@@ -816,7 +816,7 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    ylabel: 800HZ
+    ylabel: 400Hz
     ymax: '4'
     ymin: '-4'
     yunit: '""'
@@ -824,7 +824,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1132, 658]
+    coordinate: [1172, 423]
     rotation: 0
     state: enabled
 
@@ -835,10 +835,10 @@ connections:
 - [analog_sig_source_x_0_0_0_0, '0', blocks_sub_xx_0_0, '1']
 - [analog_sig_source_x_0_0_0_0_0, '0', blocks_sub_xx_0_0_0_0_0, '1']
 - [blocks_sub_xx_0, '0', qtgui_time_sink_x_0, '0']
-- [blocks_sub_xx_0_0, '0', qtgui_time_sink_x_0_0, '0']
+- [blocks_sub_xx_0_0, '0', qtgui_time_sink_x_0_0_0_0, '0']
 - [blocks_sub_xx_0_0_0, '0', qtgui_time_sink_x_0_0_0, '0']
-- [blocks_sub_xx_0_0_0_0, '0', qtgui_time_sink_x_0_0_0_0, '0']
-- [blocks_sub_xx_0_0_0_0_0, '0', qtgui_time_sink_x_0_0_0_0_0, '0']
+- [blocks_sub_xx_0_0_0_0, '0', qtgui_time_sink_x_0_0_0_0_0, '0']
+- [blocks_sub_xx_0_0_0_0_0, '0', qtgui_time_sink_x_0_0, '0']
 - [blocks_wavfile_source_0, '0', blocks_sub_xx_0, '0']
 - [blocks_wavfile_source_0, '0', blocks_sub_xx_0_0, '0']
 - [blocks_wavfile_source_0, '0', blocks_sub_xx_0_0_0, '0']

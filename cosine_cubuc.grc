@@ -32,6 +32,18 @@ options:
     state: enabled
 
 blocks:
+- name: f
+  id: variable
+  parameters:
+    comment: ''
+    value: '1000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [465, 33]
+    rotation: 0
+    state: enabled
 - name: n
   id: variable
   parameters:
@@ -113,7 +125,7 @@ blocks:
     coordinate: [809, 323]
     rotation: 0
     state: true
-- name: blocks_vector_source_x_0
+- name: blocks_vector_source_x_1
   id: blocks_vector_source_x
   parameters:
     affinity: ''
@@ -124,13 +136,13 @@ blocks:
     repeat: 'True'
     tags: '[]'
     type: float
-    vector: '[0]*10+[1,0.5,2,1.5,-1]+[0]*10'
+    vector: '[math.cos(2*pi*f*i) for i in range(0,100000)]'
     vlen: '1'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [102, 270]
+    coordinate: [131, 267]
     rotation: 0
     state: true
 - name: interp_fir_filter_xxx_0
@@ -294,9 +306,9 @@ connections:
 - [blocks_delay_0, '0', qtgui_time_sink_x_1_0, '1']
 - [blocks_delay_0_0, '0', qtgui_time_sink_x_1_0, '0']
 - [blocks_delay_0_1, '0', qtgui_time_sink_x_1_0, '2']
-- [blocks_vector_source_x_0, '0', interp_fir_filter_xxx_0, '0']
-- [blocks_vector_source_x_0, '0', interp_fir_filter_xxx_0_0, '0']
-- [blocks_vector_source_x_0, '0', interp_fir_filter_xxx_0_1, '0']
+- [blocks_vector_source_x_1, '0', interp_fir_filter_xxx_0, '0']
+- [blocks_vector_source_x_1, '0', interp_fir_filter_xxx_0_0, '0']
+- [blocks_vector_source_x_1, '0', interp_fir_filter_xxx_0_1, '0']
 - [interp_fir_filter_xxx_0, '0', blocks_delay_0_0, '0']
 - [interp_fir_filter_xxx_0_0, '0', blocks_delay_0, '0']
 - [interp_fir_filter_xxx_0_1, '0', blocks_delay_0_1, '0']

@@ -74,6 +74,7 @@ class cubic_trials(gr.top_block, Qt.QWidget):
         ##################################################
         self.samp_rate = samp_rate = 32000
         self.n = n = 10
+        self.f = f = 1000
 
         ##################################################
         # Blocks
@@ -131,7 +132,7 @@ class cubic_trials(gr.top_block, Qt.QWidget):
         self.interp_fir_filter_xxx_0_0.declare_sample_delay(0)
         self.interp_fir_filter_xxx_0 = filter.interp_fir_filter_fff(n, [-0.5*pow(abs(i/n),3)+pow(abs(i/n),2)-0.5*pow(abs(i/n),1)  for i in range(-n,0)]+[1+1.5*pow(abs(i/n),3)-2.5*pow(abs(i/n),2)  for i in range(-n,n)]+[-0.5*pow(abs(i/n),3)+pow(abs(i/n),2)-0.5*pow(abs(i/n),1)  for i in range(0,n)])
         self.interp_fir_filter_xxx_0.declare_sample_delay(0)
-        self.blocks_vector_source_x_0 = blocks.vector_source_f([0]*10+[1,0.5,2,1.5,-1]+[0]*10, True, 1, [])
+        self.blocks_vector_source_x_1 = blocks.vector_source_f([math.cos(2*pi*f*i) for i in range(0,100000)], True, 1, [])
         self.blocks_delay_0_1 = blocks.delay(gr.sizeof_float*1, n)
         self.blocks_delay_0 = blocks.delay(gr.sizeof_float*1, 2*n)
 
@@ -142,9 +143,9 @@ class cubic_trials(gr.top_block, Qt.QWidget):
         ##################################################
         self.connect((self.blocks_delay_0, 0), (self.qtgui_time_sink_x_1_0, 1))
         self.connect((self.blocks_delay_0_1, 0), (self.qtgui_time_sink_x_1_0, 2))
-        self.connect((self.blocks_vector_source_x_0, 0), (self.interp_fir_filter_xxx_0, 0))
-        self.connect((self.blocks_vector_source_x_0, 0), (self.interp_fir_filter_xxx_0_0, 0))
-        self.connect((self.blocks_vector_source_x_0, 0), (self.interp_fir_filter_xxx_0_1, 0))
+        self.connect((self.blocks_vector_source_x_1, 0), (self.interp_fir_filter_xxx_0, 0))
+        self.connect((self.blocks_vector_source_x_1, 0), (self.interp_fir_filter_xxx_0_0, 0))
+        self.connect((self.blocks_vector_source_x_1, 0), (self.interp_fir_filter_xxx_0_1, 0))
         self.connect((self.interp_fir_filter_xxx_0, 0), (self.qtgui_time_sink_x_1_0, 0))
         self.connect((self.interp_fir_filter_xxx_0_0, 0), (self.blocks_delay_0, 0))
         self.connect((self.interp_fir_filter_xxx_0_1, 0), (self.blocks_delay_0_1, 0))
@@ -172,6 +173,13 @@ class cubic_trials(gr.top_block, Qt.QWidget):
         self.blocks_delay_0_1.set_dly(self.n)
         self.interp_fir_filter_xxx_0.set_taps([-0.5*pow(abs(i/self.n),3)+pow(abs(i/self.n),2)-0.5*pow(abs(i/self.n),1)  for i in range(-self.n,0)]+[1+1.5*pow(abs(i/self.n),3)-2.5*pow(abs(i/self.n),2)  for i in range(-self.n,self.n)]+[-0.5*pow(abs(i/self.n),3)+pow(abs(i/self.n),2)-0.5*pow(abs(i/self.n),1)  for i in range(0,self.n)])
         self.interp_fir_filter_xxx_0_1.set_taps([1-abs(i/self.n) for i in range(-self.n,self.n)])
+
+    def get_f(self):
+        return self.f
+
+    def set_f(self, f):
+        self.f = f
+        self.blocks_vector_source_x_1.set_data([math.cos(2*pi*self.f*i) for i in range(0,100000)], [])
 
 
 
