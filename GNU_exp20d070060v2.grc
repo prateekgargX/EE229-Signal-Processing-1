@@ -637,7 +637,7 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     name: '""'
-    nconnections: '3'
+    nconnections: '1'
     showports: 'False'
     tr_chan: '0'
     tr_level: '0.0'
