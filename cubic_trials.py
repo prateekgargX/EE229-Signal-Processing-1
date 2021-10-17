@@ -125,13 +125,69 @@ class cubic_trials(gr.top_block, Qt.QWidget):
 
         self._qtgui_time_sink_x_1_0_win = sip.wrapinstance(self.qtgui_time_sink_x_1_0.pyqwidget(), Qt.QWidget)
         self.top_grid_layout.addWidget(self._qtgui_time_sink_x_1_0_win)
+        self.qtgui_time_sink_x_0 = qtgui.time_sink_f(
+            600, #size
+            samp_rate, #samp_rate
+            "", #name
+            3 #number of inputs
+        )
+        self.qtgui_time_sink_x_0.set_update_time(0.10)
+        self.qtgui_time_sink_x_0.set_y_axis(-1, 1)
+
+        self.qtgui_time_sink_x_0.set_y_label('Amplitude', "")
+
+        self.qtgui_time_sink_x_0.enable_tags(True)
+        self.qtgui_time_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "")
+        self.qtgui_time_sink_x_0.enable_autoscale(False)
+        self.qtgui_time_sink_x_0.enable_grid(False)
+        self.qtgui_time_sink_x_0.enable_axis_labels(True)
+        self.qtgui_time_sink_x_0.enable_control_panel(False)
+        self.qtgui_time_sink_x_0.enable_stem_plot(False)
+
+
+        labels = ['Signal 1', 'Signal 2', 'Signal 3', 'Signal 4', 'Signal 5',
+            'Signal 6', 'Signal 7', 'Signal 8', 'Signal 9', 'Signal 10']
+        widths = [1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1]
+        colors = ['blue', 'red', 'green', 'black', 'cyan',
+            'magenta', 'yellow', 'dark red', 'dark green', 'dark blue']
+        alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
+            1.0, 1.0, 1.0, 1.0, 1.0]
+        styles = [1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1]
+        markers = [-1, -1, -1, -1, -1,
+            -1, -1, -1, -1, -1]
+
+
+        for i in range(3):
+            if len(labels[i]) == 0:
+                self.qtgui_time_sink_x_0.set_line_label(i, "Data {0}".format(i))
+            else:
+                self.qtgui_time_sink_x_0.set_line_label(i, labels[i])
+            self.qtgui_time_sink_x_0.set_line_width(i, widths[i])
+            self.qtgui_time_sink_x_0.set_line_color(i, colors[i])
+            self.qtgui_time_sink_x_0.set_line_style(i, styles[i])
+            self.qtgui_time_sink_x_0.set_line_marker(i, markers[i])
+            self.qtgui_time_sink_x_0.set_line_alpha(i, alphas[i])
+
+        self._qtgui_time_sink_x_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0.pyqwidget(), Qt.QWidget)
+        self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_win)
+        self.interp_fir_filter_xxx_0_2 = filter.interp_fir_filter_fff(n, [-0.5*pow(abs(i/n),3)+pow(abs(i/n),2)-0.5*pow(abs(i/n),1)  for i in range(-n,0)]+[1+1.5*pow(abs(i/n),3)-2.5*pow(abs(i/n),2)  for i in range(-n,n)]+[-0.5*pow(abs(i/n),3)+pow(abs(i/n),2)-0.5*pow(abs(i/n),1)  for i in range(0,n)])
+        self.interp_fir_filter_xxx_0_2.declare_sample_delay(0)
+        self.interp_fir_filter_xxx_0_1_0 = filter.interp_fir_filter_fff(n, [1-abs(i/n) for i in range(-n,n)])
+        self.interp_fir_filter_xxx_0_1_0.declare_sample_delay(0)
         self.interp_fir_filter_xxx_0_1 = filter.interp_fir_filter_fff(n, [1-abs(i/n) for i in range(-n,n)])
         self.interp_fir_filter_xxx_0_1.declare_sample_delay(0)
+        self.interp_fir_filter_xxx_0_0_0 = filter.interp_fir_filter_fff(n, [1])
+        self.interp_fir_filter_xxx_0_0_0.declare_sample_delay(0)
         self.interp_fir_filter_xxx_0_0 = filter.interp_fir_filter_fff(n, [1])
         self.interp_fir_filter_xxx_0_0.declare_sample_delay(0)
         self.interp_fir_filter_xxx_0 = filter.interp_fir_filter_fff(n, [-0.5*pow(abs(i/n),3)+pow(abs(i/n),2)-0.5*pow(abs(i/n),1)  for i in range(-n,0)]+[1+1.5*pow(abs(i/n),3)-2.5*pow(abs(i/n),2)  for i in range(-n,n)]+[-0.5*pow(abs(i/n),3)+pow(abs(i/n),2)-0.5*pow(abs(i/n),1)  for i in range(0,n)])
         self.interp_fir_filter_xxx_0.declare_sample_delay(0)
+        self.blocks_vector_source_x_0_0 = blocks.vector_source_f([0]*10+[1]+[0]*10, True, 1, [])
         self.blocks_vector_source_x_0 = blocks.vector_source_f([0]*10+[1,0.5,2,1.5,-1]+[0]*10, True, 1, [])
+        self.blocks_delay_0_2 = blocks.delay(gr.sizeof_float*1, 2*n)
+        self.blocks_delay_0_1_0 = blocks.delay(gr.sizeof_float*1, n)
         self.blocks_delay_0_1 = blocks.delay(gr.sizeof_float*1, n)
         self.blocks_delay_0 = blocks.delay(gr.sizeof_float*1, 2*n)
 
@@ -142,12 +198,20 @@ class cubic_trials(gr.top_block, Qt.QWidget):
         ##################################################
         self.connect((self.blocks_delay_0, 0), (self.qtgui_time_sink_x_1_0, 1))
         self.connect((self.blocks_delay_0_1, 0), (self.qtgui_time_sink_x_1_0, 2))
+        self.connect((self.blocks_delay_0_1_0, 0), (self.qtgui_time_sink_x_0, 1))
+        self.connect((self.blocks_delay_0_2, 0), (self.qtgui_time_sink_x_0, 0))
         self.connect((self.blocks_vector_source_x_0, 0), (self.interp_fir_filter_xxx_0, 0))
         self.connect((self.blocks_vector_source_x_0, 0), (self.interp_fir_filter_xxx_0_0, 0))
         self.connect((self.blocks_vector_source_x_0, 0), (self.interp_fir_filter_xxx_0_1, 0))
+        self.connect((self.blocks_vector_source_x_0_0, 0), (self.interp_fir_filter_xxx_0_0_0, 0))
+        self.connect((self.blocks_vector_source_x_0_0, 0), (self.interp_fir_filter_xxx_0_1_0, 0))
+        self.connect((self.blocks_vector_source_x_0_0, 0), (self.interp_fir_filter_xxx_0_2, 0))
         self.connect((self.interp_fir_filter_xxx_0, 0), (self.qtgui_time_sink_x_1_0, 0))
         self.connect((self.interp_fir_filter_xxx_0_0, 0), (self.blocks_delay_0, 0))
+        self.connect((self.interp_fir_filter_xxx_0_0_0, 0), (self.blocks_delay_0_2, 0))
         self.connect((self.interp_fir_filter_xxx_0_1, 0), (self.blocks_delay_0_1, 0))
+        self.connect((self.interp_fir_filter_xxx_0_1_0, 0), (self.blocks_delay_0_1_0, 0))
+        self.connect((self.interp_fir_filter_xxx_0_2, 0), (self.qtgui_time_sink_x_0, 2))
 
 
     def closeEvent(self, event):
@@ -160,6 +224,7 @@ class cubic_trials(gr.top_block, Qt.QWidget):
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
+        self.qtgui_time_sink_x_0.set_samp_rate(self.samp_rate)
         self.qtgui_time_sink_x_1_0.set_samp_rate(self.samp_rate)
 
     def get_n(self):
@@ -169,9 +234,14 @@ class cubic_trials(gr.top_block, Qt.QWidget):
         self.n = n
         self.blocks_delay_0.set_dly(2*self.n)
         self.blocks_delay_0_0.set_dly(-self.n)
+        self.blocks_delay_0_0_0.set_dly(-self.n)
         self.blocks_delay_0_1.set_dly(self.n)
+        self.blocks_delay_0_1_0.set_dly(self.n)
+        self.blocks_delay_0_2.set_dly(2*self.n)
         self.interp_fir_filter_xxx_0.set_taps([-0.5*pow(abs(i/self.n),3)+pow(abs(i/self.n),2)-0.5*pow(abs(i/self.n),1)  for i in range(-self.n,0)]+[1+1.5*pow(abs(i/self.n),3)-2.5*pow(abs(i/self.n),2)  for i in range(-self.n,self.n)]+[-0.5*pow(abs(i/self.n),3)+pow(abs(i/self.n),2)-0.5*pow(abs(i/self.n),1)  for i in range(0,self.n)])
         self.interp_fir_filter_xxx_0_1.set_taps([1-abs(i/self.n) for i in range(-self.n,self.n)])
+        self.interp_fir_filter_xxx_0_1_0.set_taps([1-abs(i/self.n) for i in range(-self.n,self.n)])
+        self.interp_fir_filter_xxx_0_2.set_taps([-0.5*pow(abs(i/self.n),3)+pow(abs(i/self.n),2)-0.5*pow(abs(i/self.n),1)  for i in range(-self.n,0)]+[1+1.5*pow(abs(i/self.n),3)-2.5*pow(abs(i/self.n),2)  for i in range(-self.n,self.n)]+[-0.5*pow(abs(i/self.n),3)+pow(abs(i/self.n),2)-0.5*pow(abs(i/self.n),1)  for i in range(0,self.n)])
 
 
 
