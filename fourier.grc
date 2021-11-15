@@ -36,36 +36,36 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '5'
+    value: '3'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [675, 37]
+    coordinate: [679, 41]
     rotation: 0
     state: true
 - name: gauss_val
   id: variable
   parameters:
     comment: ''
-    value: np.exp(-np.pi*np.power(np.linspace(-5,5,1024),2.0))
+    value: np.exp(-np.pi*np.power(np.linspace(-5,5,512),2.0))
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [421, 15]
+    coordinate: [421, 17]
     rotation: 0
     state: true
 - name: samp_rate
   id: variable
   parameters:
     comment: ''
-    value: '32000'
+    value: '320000'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [184, 12]
+    coordinate: [185, 12]
     rotation: 0
     state: enabled
 - name: blocks_throttle_0
@@ -84,7 +84,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [738, 303]
+    coordinate: [798, 301]
     rotation: 0
     state: true
 - name: blocks_vector_source_x_0
@@ -104,7 +104,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [154, 291]
+    coordinate: [159, 284]
     rotation: 0
     state: true
 - name: fir_filter_xxx_0
@@ -123,9 +123,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [433, 158]
+    coordinate: [451, 220]
     rotation: 0
-    state: true
+    state: enabled
 - name: import_0
   id: import
   parameters:
@@ -155,9 +155,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [738, 158]
+    coordinate: [742, 186]
     rotation: 0
-    state: true
+    state: enabled
 - name: qtgui_freq_sink_x_0
   id: qtgui_freq_sink_x
   parameters:
@@ -190,7 +190,7 @@ blocks:
     comment: ''
     ctrlpanel: 'False'
     fc: '0'
-    fftsize: '2096'
+    fftsize: '512'
     freqhalf: 'True'
     grid: 'False'
     gui_hint: ''
@@ -235,7 +235,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1168, 307]
+    coordinate: [1186, 336]
     rotation: 0
     state: true
 - name: qtgui_time_sink_x_0
@@ -293,7 +293,7 @@ blocks:
     marker9: '-1'
     name: '""'
     nconnections: '2'
-    size: '1024'
+    size: '512'
     srate: samp_rate
     stemplot: 'False'
     style1: '1'

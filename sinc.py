@@ -25,8 +25,6 @@ from gnuradio import qtgui
 from gnuradio.filter import firdes
 import sip
 from gnuradio import blocks
-import numpy
-from gnuradio import digital
 from gnuradio import filter
 from gnuradio import gr
 import sys
@@ -38,7 +36,7 @@ import numpy as np
 
 from gnuradio import qtgui
 
-class sincinter(gr.top_block, Qt.QWidget):
+class sinc(gr.top_block, Qt.QWidget):
 
     def __init__(self):
         gr.top_block.__init__(self, "Not titled yet")
@@ -61,7 +59,7 @@ class sincinter(gr.top_block, Qt.QWidget):
         self.top_grid_layout = Qt.QGridLayout()
         self.top_layout.addLayout(self.top_grid_layout)
 
-        self.settings = Qt.QSettings("GNU Radio", "sincinter")
+        self.settings = Qt.QSettings("GNU Radio", "sinc")
 
         try:
             if StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
@@ -75,12 +73,13 @@ class sincinter(gr.top_block, Qt.QWidget):
         # Variables
         ##################################################
         self.samp_rate = samp_rate = 400000
+        self.a = a = 10000
 
         ##################################################
         # Blocks
         ##################################################
-        self.qtgui_time_sink_x_0 = qtgui.time_sink_c(
-            1024, #size
+        self.qtgui_time_sink_x_0 = qtgui.time_sink_f(
+            (2*a+1)*4, #size
             samp_rate, #samp_rate
             "", #name
             1 #number of inputs
@@ -113,12 +112,9 @@ class sincinter(gr.top_block, Qt.QWidget):
             -1, -1, -1, -1, -1]
 
 
-        for i in range(2):
+        for i in range(1):
             if len(labels[i]) == 0:
-                if (i % 2 == 0):
-                    self.qtgui_time_sink_x_0.set_line_label(i, "Re{{Data {0}}}".format(i/2))
-                else:
-                    self.qtgui_time_sink_x_0.set_line_label(i, "Im{{Data {0}}}".format(i/2))
+                self.qtgui_time_sink_x_0.set_line_label(i, "Data {0}".format(i))
             else:
                 self.qtgui_time_sink_x_0.set_line_label(i, labels[i])
             self.qtgui_time_sink_x_0.set_line_width(i, widths[i])
@@ -129,9 +125,9 @@ class sincinter(gr.top_block, Qt.QWidget):
 
         self._qtgui_time_sink_x_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0.pyqwidget(), Qt.QWidget)
         self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_win)
-        self.qtgui_freq_sink_x_0 = qtgui.freq_sink_c(
-            1024, #size
-            firdes.WIN_BLACKMAN_hARRIS, #wintype
+        self.qtgui_freq_sink_x_0 = qtgui.freq_sink_f(
+            4096, #size
+            firdes.WIN_RECTANGULAR, #wintype
             0, #fc
             samp_rate, #bw
             "", #name
@@ -143,11 +139,12 @@ class sincinter(gr.top_block, Qt.QWidget):
         self.qtgui_freq_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, 0.0, 0, "")
         self.qtgui_freq_sink_x_0.enable_autoscale(False)
         self.qtgui_freq_sink_x_0.enable_grid(False)
-        self.qtgui_freq_sink_x_0.set_fft_average(1.0)
+        self.qtgui_freq_sink_x_0.set_fft_average(0.05)
         self.qtgui_freq_sink_x_0.enable_axis_labels(True)
         self.qtgui_freq_sink_x_0.enable_control_panel(False)
 
 
+        self.qtgui_freq_sink_x_0.set_plot_pos_half(not True)
 
         labels = ['', '', '', '', '',
             '', '', '', '', '']
@@ -169,67 +166,24 @@ class sincinter(gr.top_block, Qt.QWidget):
 
         self._qtgui_freq_sink_x_0_win = sip.wrapinstance(self.qtgui_freq_sink_x_0.pyqwidget(), Qt.QWidget)
         self.top_grid_layout.addWidget(self._qtgui_freq_sink_x_0_win)
-        self.qtgui_const_sink_x_0 = qtgui.const_sink_c(
-            1024, #size
-            "", #name
-            1 #number of inputs
-        )
-        self.qtgui_const_sink_x_0.set_update_time(0.10)
-        self.qtgui_const_sink_x_0.set_y_axis(-2, 2)
-        self.qtgui_const_sink_x_0.set_x_axis(-2, 2)
-        self.qtgui_const_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, "")
-        self.qtgui_const_sink_x_0.enable_autoscale(False)
-        self.qtgui_const_sink_x_0.enable_grid(False)
-        self.qtgui_const_sink_x_0.enable_axis_labels(True)
-
-
-        labels = ['', '', '', '', '',
-            '', '', '', '', '']
-        widths = [1, 1, 1, 1, 1,
-            1, 1, 1, 1, 1]
-        colors = ["blue", "red", "red", "red", "red",
-            "red", "red", "red", "red", "red"]
-        styles = [0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0]
-        markers = [0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0]
-        alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
-            1.0, 1.0, 1.0, 1.0, 1.0]
-
-        for i in range(1):
-            if len(labels[i]) == 0:
-                self.qtgui_const_sink_x_0.set_line_label(i, "Data {0}".format(i))
-            else:
-                self.qtgui_const_sink_x_0.set_line_label(i, labels[i])
-            self.qtgui_const_sink_x_0.set_line_width(i, widths[i])
-            self.qtgui_const_sink_x_0.set_line_color(i, colors[i])
-            self.qtgui_const_sink_x_0.set_line_style(i, styles[i])
-            self.qtgui_const_sink_x_0.set_line_marker(i, markers[i])
-            self.qtgui_const_sink_x_0.set_line_alpha(i, alphas[i])
-
-        self._qtgui_const_sink_x_0_win = sip.wrapinstance(self.qtgui_const_sink_x_0.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_const_sink_x_0_win)
-        self.interp_fir_filter_xxx_0 = filter.interp_fir_filter_ccf(4, np.sinc(np.linspace(-5,5,41)))
+        self.interp_fir_filter_xxx_0 = filter.interp_fir_filter_fff(4, np.sinc(np.linspace(-1000,1000,a)))
         self.interp_fir_filter_xxx_0.declare_sample_delay(0)
-        self.digital_chunks_to_symbols_xx_0 = digital.chunks_to_symbols_ic((np.exp(1*2j*np.pi*np.arange(0,4)/4)), 1)
-        self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate/4,True)
-        self.analog_random_source_x_0 = blocks.vector_source_i(list(map(int, numpy.random.randint(0, 1, 1000))), True)
+        self.blocks_vector_source_x_0 = blocks.vector_source_f([0]*a+[1]+[0]*a, True, 1, [])
+        self.blocks_throttle_0 = blocks.throttle(gr.sizeof_float*1, samp_rate/4,True)
 
 
 
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.analog_random_source_x_0, 0), (self.digital_chunks_to_symbols_xx_0, 0))
         self.connect((self.blocks_throttle_0, 0), (self.interp_fir_filter_xxx_0, 0))
-        self.connect((self.digital_chunks_to_symbols_xx_0, 0), (self.blocks_throttle_0, 0))
-        self.connect((self.digital_chunks_to_symbols_xx_0, 0), (self.qtgui_const_sink_x_0, 0))
+        self.connect((self.blocks_vector_source_x_0, 0), (self.blocks_throttle_0, 0))
         self.connect((self.interp_fir_filter_xxx_0, 0), (self.qtgui_freq_sink_x_0, 0))
         self.connect((self.interp_fir_filter_xxx_0, 0), (self.qtgui_time_sink_x_0, 0))
 
 
     def closeEvent(self, event):
-        self.settings = Qt.QSettings("GNU Radio", "sincinter")
+        self.settings = Qt.QSettings("GNU Radio", "sinc")
         self.settings.setValue("geometry", self.saveGeometry())
         event.accept()
 
@@ -242,11 +196,19 @@ class sincinter(gr.top_block, Qt.QWidget):
         self.qtgui_freq_sink_x_0.set_frequency_range(0, self.samp_rate)
         self.qtgui_time_sink_x_0.set_samp_rate(self.samp_rate)
 
+    def get_a(self):
+        return self.a
+
+    def set_a(self, a):
+        self.a = a
+        self.blocks_vector_source_x_0.set_data([0]*self.a+[1]+[0]*self.a, [])
+        self.interp_fir_filter_xxx_0.set_taps(np.sinc(np.linspace(-1000,1000,self.a)))
 
 
 
 
-def main(top_block_cls=sincinter, options=None):
+
+def main(top_block_cls=sinc, options=None):
 
     if StrictVersion("4.5.0") <= StrictVersion(Qt.qVersion()) < StrictVersion("5.0.0"):
         style = gr.prefs().get_string('qtgui', 'style', 'raster')

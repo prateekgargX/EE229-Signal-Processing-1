@@ -72,15 +72,15 @@ class defaul(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.samp_rate = samp_rate = 32000
-        self.gauss_val = gauss_val = np.exp(-np.pi*np.power(np.linspace(-5,5,1024),2.0))
-        self.dec_val = dec_val = 5
+        self.samp_rate = samp_rate = 320000
+        self.gauss_val = gauss_val = np.exp(-np.pi*np.power(np.linspace(-5,5,512),2.0))
+        self.dec_val = dec_val = 3
 
         ##################################################
         # Blocks
         ##################################################
         self.qtgui_time_sink_x_0 = qtgui.time_sink_f(
-            1024, #size
+            512, #size
             samp_rate, #samp_rate
             "", #name
             2 #number of inputs
@@ -127,7 +127,7 @@ class defaul(gr.top_block, Qt.QWidget):
         self._qtgui_time_sink_x_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0.pyqwidget(), Qt.QWidget)
         self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_win)
         self.qtgui_freq_sink_x_0 = qtgui.freq_sink_f(
-            2096, #size
+            512, #size
             firdes.WIN_BLACKMAN_hARRIS, #wintype
             0, #fc
             samp_rate, #bw

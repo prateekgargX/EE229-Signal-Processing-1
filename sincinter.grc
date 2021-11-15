@@ -36,12 +36,12 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: 400k
+    value: '400000'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [184, 12]
+    coordinate: [214, 13]
     rotation: 0
     state: enabled
 - name: analog_random_source_x_0
@@ -50,7 +50,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    max: '8'
+    max: '1'
     maxoutbuf: '0'
     min: '0'
     minoutbuf: '0'
@@ -61,7 +61,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [80, 109]
+    coordinate: [58, 201]
     rotation: 0
     state: true
 - name: blocks_throttle_0
@@ -73,14 +73,14 @@ blocks:
     ignoretag: 'True'
     maxoutbuf: '0'
     minoutbuf: '0'
-    samples_per_second: samp_rate
-    type: float
+    samples_per_second: samp_rate/4
+    type: complex
     vlen: '1'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [717, 234]
+    coordinate: [811, 236]
     rotation: 0
     state: true
 - name: digital_chunks_to_symbols_xx_0
@@ -94,13 +94,13 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     num_ports: '1'
-    out_type: float
-    symbol_table: 0,1,2,3,4,5,6,7,8
+    out_type: complex
+    symbol_table: (np.exp(1*2j*np.pi*np.arange(0,4)/4))
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [307, 275]
+    coordinate: [399, 280]
     rotation: 0
     state: true
 - name: import_0
@@ -113,7 +113,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [310, 22]
+    coordinate: [362, 19]
     rotation: 0
     state: true
 - name: interp_fir_filter_xxx_0
@@ -127,12 +127,104 @@ blocks:
     minoutbuf: '0'
     samp_delay: '0'
     taps: np.sinc(np.linspace(-5,5,41))
-    type: fff
+    type: ccf
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [993, 226]
+    coordinate: [1067, 228]
+    rotation: 0
+    state: true
+- name: qtgui_const_sink_x_0
+  id: qtgui_const_sink_x
+  parameters:
+    affinity: ''
+    alias: ''
+    alpha1: '1.0'
+    alpha10: '1.0'
+    alpha2: '1.0'
+    alpha3: '1.0'
+    alpha4: '1.0'
+    alpha5: '1.0'
+    alpha6: '1.0'
+    alpha7: '1.0'
+    alpha8: '1.0'
+    alpha9: '1.0'
+    autoscale: 'False'
+    axislabels: 'True'
+    color1: '"blue"'
+    color10: '"red"'
+    color2: '"red"'
+    color3: '"red"'
+    color4: '"red"'
+    color5: '"red"'
+    color6: '"red"'
+    color7: '"red"'
+    color8: '"red"'
+    color9: '"red"'
+    comment: ''
+    grid: 'False'
+    gui_hint: ''
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    legend: 'True'
+    marker1: '0'
+    marker10: '0'
+    marker2: '0'
+    marker3: '0'
+    marker4: '0'
+    marker5: '0'
+    marker6: '0'
+    marker7: '0'
+    marker8: '0'
+    marker9: '0'
+    name: '""'
+    nconnections: '1'
+    size: '1024'
+    style1: '0'
+    style10: '0'
+    style2: '0'
+    style3: '0'
+    style4: '0'
+    style5: '0'
+    style6: '0'
+    style7: '0'
+    style8: '0'
+    style9: '0'
+    tr_chan: '0'
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
+    tr_slope: qtgui.TRIG_SLOPE_POS
+    tr_tag: '""'
+    type: complex
+    update_time: '0.10'
+    width1: '1'
+    width10: '1'
+    width2: '1'
+    width3: '1'
+    width4: '1'
+    width5: '1'
+    width6: '1'
+    width7: '1'
+    width8: '1'
+    width9: '1'
+    xmax: '2'
+    xmin: '-2'
+    ymax: '2'
+    ymin: '-2'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [950, 346]
     rotation: 0
     state: true
 - name: qtgui_freq_sink_x_0
@@ -192,7 +284,7 @@ blocks:
     tr_level: '0.0'
     tr_mode: qtgui.TRIG_MODE_FREE
     tr_tag: '""'
-    type: float
+    type: complex
     units: dB
     update_time: '0.10'
     width1: '1'
@@ -212,7 +304,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1349, 364]
+    coordinate: [1415, 300]
     rotation: 0
     state: true
 - name: qtgui_time_sink_x_0
@@ -289,7 +381,7 @@ blocks:
     tr_mode: qtgui.TRIG_MODE_FREE
     tr_slope: qtgui.TRIG_SLOPE_POS
     tr_tag: '""'
-    type: float
+    type: complex
     update_time: '0.10'
     width1: '1'
     width10: '1'
@@ -309,7 +401,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1326, 87]
+    coordinate: [1401, 128]
     rotation: 0
     state: true
 
@@ -317,6 +409,7 @@ connections:
 - [analog_random_source_x_0, '0', digital_chunks_to_symbols_xx_0, '0']
 - [blocks_throttle_0, '0', interp_fir_filter_xxx_0, '0']
 - [digital_chunks_to_symbols_xx_0, '0', blocks_throttle_0, '0']
+- [digital_chunks_to_symbols_xx_0, '0', qtgui_const_sink_x_0, '0']
 - [interp_fir_filter_xxx_0, '0', qtgui_freq_sink_x_0, '0']
 - [interp_fir_filter_xxx_0, '0', qtgui_time_sink_x_0, '0']
 

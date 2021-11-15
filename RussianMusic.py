@@ -73,7 +73,7 @@ class RussianMusic(gr.top_block, Qt.QWidget):
         # Variables
         ##################################################
         self.samp_rate = samp_rate = 441000
-        self.dsample = dsample = 8
+        self.dsample = dsample = 16
 
         ##################################################
         # Blocks
